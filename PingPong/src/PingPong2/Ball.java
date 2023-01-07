@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 import java.util.Random;
 //dd
 public class Ball extends Rectangle {  
-	//Global variable  ddds dd
+	//Global variable  ddds dd d
 
 	Random random;
 	int xVelocity;
