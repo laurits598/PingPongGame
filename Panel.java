@@ -1,0 +1,100 @@
+package PingPong2;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+import javax.swing.*;
+
+public class Panel extends JPanel implements Runnable {  
+	
+	static final int WIDTH = 1000;
+	static final int HEIGHT = (int)(WIDTH * (0.5555));
+	static final Dimension SCREEN_SIZE = new Dimension(WIDTH, HEIGHT);
+	static final int BALL_DIAMETER = 20;
+	static final int PADDLE_WIDTH = 25;
+	static final int PADDLE_HEIGHT = 100;
+	
+	Thread gameThread;
+	Image image;
+	Graphics graphics;
+	Random random;
+	Paddle paddle1;
+	Paddle paddle2;
+	Ball ball;
+	Score score;
+	
+	Panel() {
+		newPaddles();
+		newBall();
+		score = new Score(WIDTH, HEIGHT);
+		this.setFocusable(true);
+		this.addKeyListener(new AL());
+		this.setPreferredSize(SCREEN_SIZE);
+		
+		gameThread = new Thread(this);
+		gameThread.start();
+	}
+	
+	public void newBall() {
+		
+	}
+	public void newPaddles() {
+		paddle1 = new Paddle(0, (HEIGHT/2)-(PADDLE_HEIGHT/2), PADDLE_WIDTH, PADDLE_HEIGHT, 1);
+		paddle2 = new Paddle(WIDTH-PADDLE_WIDTH, (HEIGHT/2)-(PADDLE_HEIGHT/2), PADDLE_WIDTH, PADDLE_HEIGHT, 2);
+
+	}
+	public void move() {
+		
+	}
+	public void paint(Graphics g) {
+		image = createImage(getWidth(), getHeight());
+		graphics = image.getGraphics();
+		draw(graphics);
+		g.drawImage(image, 0, 0, this);
+	
+	}
+	public void draw(Graphics g) {
+		paddle1.draw(g);
+		paddle2.draw(g);
+	}
+	public void checkCollision() {
+		
+	}
+	// game loop
+	public void run() {
+		long lastTime = System.nanoTime();
+		double amountOfTicks = 60.0;
+		double ns = 1000000000 / amountOfTicks;
+		double delta = 0;
+		while(true) {
+			long now = System.nanoTime();
+			delta += (now - lastTime)/ns;
+			lastTime = now;
+			if(delta >= 1) {
+				move();
+				checkCollision();
+				repaint();
+				delta--;
+			}
+		}
+	}
+	
+	public class AL extends KeyAdapter{
+		public void keyPressed(KeyEvent e) {
+			paddle1.keyPressed(e);
+			paddle2.keyPressed(e);
+			
+		}
+		public void keyReleased(KeyEvent e) {
+			paddle1.keyReleased(e);
+			paddle2.keyReleased(e);
+			
+		}
+	}
+
+    
+}  
+
+
+
+
