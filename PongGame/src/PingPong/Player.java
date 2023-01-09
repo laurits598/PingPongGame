@@ -10,6 +10,8 @@ public class Player {
 	private static final String SERVER_IP = "127.0.0.1";
 	private static final int SERVER_PORT = 8080;
 	public static String USERNAME = null;
+	public static int USER_ID = 0;
+	public static String HOST = null; 
 	
 	public static void main(String[] args) throws IOException {
 		Socket socket = new Socket(SERVER_IP, SERVER_PORT);
@@ -42,6 +44,14 @@ public class Player {
 	public void setUsername(String username) {
 		this.USERNAME = username;
 	}
+	
+	public void setUserID(int userID) {
+		this.USER_ID = userID;
+	}
+	
+	public String getHost() {
+        return this.HOST;
+    }
 }
 
 
