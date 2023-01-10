@@ -8,12 +8,16 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import PingPong2.ActualField;
-import PingPong2.FormalField;
-import PingPong2.LobbyRequestReceiver;
-import PingPong2.SequentialSpace;
-import PingPong2.SpaceRepository;
-import PingPong2.UserPinger;
+import org.jspace.Space;
+import org.jspace.SpaceRepository;
+import org.jspace.SequentialSpace;
+
+//import PingPong2.ActualField;
+//import PingPong2.FormalField;
+//import PingPong2.LobbyRequestReceiver;
+//import PingPong2.SequentialSpace;
+//import PingPong2.SpaceRepository;
+//import PingPong2.UserPinger;
 
 public class GameServer implements Runnable{
 	private static final int PORT = 8080;
@@ -22,11 +26,13 @@ public class GameServer implements Runnable{
 	private static ExecutorService pool = Executors.newFixedThreadPool(MAX_PLAYERS);
 	public static String player1 = "";
 	public static String player2 = "";
-	public static Space gameRepository;  //check whether it's public and static--- maybe on a playerhost
+	public static SpaceRepository gameRepository;  //check whether it's public and static--- maybe on a playerhost
 	public static String gate;           //-------||---------
-	public static Thread thread; 
+	public static Thread thread;
+	public static Space gameSpace;
 
 //Should we add a constructor?
+    
 	
 	public static void main(String[] args) throws IOException {
 		ServerSocket listener = new ServerSocket(PORT);
@@ -66,7 +72,7 @@ public class GameServer implements Runnable{
             //Setting up URI
             InetAddress inetAddress = InetAddress.getLocalHost();
             String ip = inetAddress.getHostAddress();
-            //int port = 11345;   //not necessairly 
+            //int port = 11445;   //not necessairly 
             gate = "tcp://" + ip + ":" + PORT + "?keep";
             gameSpace.put("IPPort", ip + ":" + PORT);
             System.out.println("A game is hosted on IP: " + ip + ":" + PORT);
@@ -74,27 +80,20 @@ public class GameServer implements Runnable{
             // Opening gate at given URI
             gameRepository.add("game", gameSpace);
             gameRepository.addGate(gate);
+            
+            
+            
+            
+            
+            
+            
+            
+            
 //-----------------------------Until here is reliable------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------------
             //Look for players connecting
             //LobbyRequestReceiver lobbyRequestReceiver = new LobbyRequestReceiver(this, gameSpace, serverSpace);
             //startThread(lobbyRequestReceiver); //Don't need thread object since it closes automatically
-
-            //Check players are still connected
-            //UserPinger userPinger = new UserPinger(gameSpace, serverSpace);
-            //Thread userPingerThread = startThread(userPinger);
-
-            //Object[] gameUpdate = serverSpace.get(new ActualField("gameUpdate"), new FormalField(String.class));
-            //if(((String) gameUpdate[1]).matches("startGame")){
-              //  userPinger.stop(); //Stop while loop
-              //  userPingerThread.interrupt(); //Interrupt blocking calls
-              //  launchGameServer(serverSpace, gameSpace);
-            //} else {
-              //  userPinger.stop(); //Stop while loop
-              //  userPingerThread.interrupt(); //Interrupt blocking calls
-               // gameRepository.closeGate(gate);
-               // gameRepository.shutDown();
-            //}
 
         } catch (Exception e) {
             e.printStackTrace();
