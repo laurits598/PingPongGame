@@ -72,7 +72,7 @@ public class GameServer implements Runnable{
             //Setting up URI
             InetAddress inetAddress = InetAddress.getLocalHost();
             String ip = inetAddress.getHostAddress();
-            //int port = 11445;   //not necessairly 
+            int port = 11445;   //not necessairly 
             gate = "tcp://" + ip + ":" + PORT + "?keep";
             gameSpace.put("IPPort", ip + ":" + PORT);
             System.out.println("A game is hosted on IP: " + ip + ":" + PORT);
@@ -80,6 +80,7 @@ public class GameServer implements Runnable{
             // Opening gate at given URI
             gameRepository.add("game", gameSpace);
             gameRepository.addGate(gate);
+            
             
             
             
