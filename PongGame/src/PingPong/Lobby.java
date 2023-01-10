@@ -13,6 +13,7 @@ public class Lobby {
         String input = scanner.next();
         
         //If hosting, user joins a new space and repository
+        //dsdd
         if (input.equals("HOST")) {
             SequentialSpace game = new SequentialSpace();
             SpaceRepository repository = new SpaceRepository();
