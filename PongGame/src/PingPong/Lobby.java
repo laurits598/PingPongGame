@@ -11,7 +11,9 @@ public class Lobby {
         //User decides whether to join or host a game, based on its input
         System.out.println("Choose 'HOST' or 'JOIN': ");
         String input = scanner.next();
+        
         //If hosting, user joins a new space and repository
+        //dsdd
         if (input.equals("HOST")) {
             SequentialSpace game = new SequentialSpace();
             SpaceRepository repository = new SpaceRepository();
