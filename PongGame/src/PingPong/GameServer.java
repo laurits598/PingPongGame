@@ -30,6 +30,8 @@ public class GameServer implements Runnable{
 	public static String gate;           //-------||---------
 	public static Thread thread;
 	public static Space gameSpace;
+	public static boolean hostAvailable = true;
+	public static boolean joinAvailable = true;
 
 //Should we add a constructor?
     

@@ -1,4 +1,4 @@
-package PingPong;
+package Lobby;
 
 public class LobbyModel {
 
