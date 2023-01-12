@@ -1,5 +1,8 @@
-package PingPong;
+package Lobby;
 import org.jspace.*;
+
+import PingPong.GameServer;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Scanner;
@@ -13,9 +16,10 @@ public class Lobby {
         String input = scanner.next();
         
         //If hosting, user joins a new space and repository
-        if (input.equals("HOST")) {
+        if (input.equals("HOST") && GameServer.hostAvailable == true) {
             SequentialSpace game = new SequentialSpace();
             SpaceRepository repository = new SpaceRepository();
+            GameServer.hostAvailable = false;
 
             // Setting up URI
             InetAddress inetAddress = InetAddress.getLocalHost();
@@ -29,7 +33,14 @@ public class Lobby {
             repository.add("game", game);
 
             //If non-host, user joins the existing space with another user
-        } else if (input.equals("JOIN")) {
+        } else if (input.equals("JOIN") && GameServer.joinAvailable == true) {
+        	GameServer.joinAvailable = false;
+        	
+        	while (GameServer.hostAvailable == true) {
+        		System.out.println("Searching for host...");
+        		// delay
+        	}
+        	
             System.out.println("Enter game URI... Format: tcp://<IP>:<PORT>");
             input = scanner.next();
             String hostUri = input + "/game?keep";
