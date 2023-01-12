@@ -3,6 +3,7 @@ package PingPong;
 public class LobbyModel {
 
     private String username;
+    private int userID;
     private int MaxPlayers;
     private String host;
     private String ip;
@@ -14,7 +15,15 @@ public class LobbyModel {
     public void setUsername(String username) {
         this.username = username;
     }
-
+    
+    public int getUserID() {
+    	return userID;
+    }
+    
+    public void setUserID(int userID) {
+    	this.userID = userID;
+    }
+    
     public int getMaxPlayers() {
         return MaxPlayers;
     }
