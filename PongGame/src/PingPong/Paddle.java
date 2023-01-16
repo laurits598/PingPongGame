@@ -6,6 +6,8 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
+import org.jspace.RemoteSpace;
+
 public class Paddle extends Rectangle {  
     
 	int id;
@@ -85,5 +87,5 @@ public class Paddle extends Rectangle {
 		g.fillRect(x, y, width, height);
 	}
 
-}  
+}
 
