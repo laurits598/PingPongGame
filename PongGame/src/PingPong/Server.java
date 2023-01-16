@@ -26,11 +26,32 @@ public class Server {
 			SequentialSpace playerOneMovement = new SequentialSpace();
 			SequentialSpace playerTwoMovement = new SequentialSpace();
 			SequentialSpace ballMovement = new SequentialSpace();
+			SequentialSpace scoreSpace = new SequentialSpace();
+			
+			// Create spaces for pre-game actions
+			//SequentialSpace joinAvailable = new SequentialSpace();
+			//SequentialSpace hostAvailable = new SequentialSpace();
+			//SequentialSpace lock = new SequentialSpace();
+			//SequentialSpace player1Search = new SequentialSpace();
+			//SequentialSpace player2Search = new SequentialSpace();
+			//SequentialSpace player1_Lobby = new SequentialSpace();
+			//SequentialSpace player2_Lobby = new SequentialSpace();
+			//SequentialSpace initSession = new SequentialSpace();
 
 			// Add the space to the repository
 			repository.add("playerOneMovement", playerOneMovement);
 			repository.add("playerTwoMovement", playerTwoMovement);
 			repository.add("ballMovement", ballMovement);
+			repository.add("scoreSpace", scoreSpace);
+			
+			//repository.add("joinAvailable", joinAvailable);
+			//repository.add("hostAvailable", hostAvailable);
+			//repository.add("lock", lock);
+			//repository.add("player1Search", player1Search);
+			//repository.add("player2Search", player2Search);
+			//repository.add("player1_Lobby", player1_Lobby);
+			//repository.add("player2_Lobby", player2_Lobby);
+			//repository.add("initSession", initSession);
 			
 			// Set the URI of the chat space
 			System.out.print("Enter URI of the chat server or press enter for default: ");
@@ -51,12 +72,14 @@ public class Server {
 				Object[] t = playerTwoMovement.get(new FormalField(Integer.class), new FormalField(Integer.class), new FormalField(Integer.class));
 				System.out.println(t[0] + ":" + t[1]+":" + t[2]);
 			}*/
+			
+			
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
+			// TODO Auto-generated catch blockk
 			e.printStackTrace();
 		}
 	}

@@ -17,8 +17,8 @@ public class Frame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	Panel panel;
 	
-	Frame(boolean isPlayerOne, RemoteSpace playerOneMovement, RemoteSpace playerTwoMovement, RemoteSpace ballMovement){
-		panel = new Panel(isPlayerOne, playerOneMovement, playerTwoMovement, ballMovement);
+	Frame(boolean isPlayerOne, RemoteSpace playerOneMovement, RemoteSpace playerTwoMovement, RemoteSpace ballMovement, RemoteSpace scoreSpace){
+		panel = new Panel(isPlayerOne, playerOneMovement, playerTwoMovement, ballMovement, scoreSpace);
 		this.add(panel);
 		this.setTitle("Ping Pong");
 		this.setResizable(false);

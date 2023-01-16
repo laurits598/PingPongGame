@@ -34,11 +34,13 @@ public class Panel extends JPanel implements Runnable {
 	private RemoteSpace playerOneMovement;
 	private RemoteSpace playerTwoMovement;
 	private RemoteSpace ballMovemet;
+	private RemoteSpace scoreSpace;
 
-	Panel(boolean isPlayerOne, RemoteSpace playerOneMovement, RemoteSpace playerTwoMovement, RemoteSpace ballMovement){
+	Panel(boolean isPlayerOne, RemoteSpace playerOneMovement, RemoteSpace playerTwoMovement, RemoteSpace ballMovement, RemoteSpace scoreSpace){
 		newPaddles();
 		this.isPlayerOne = isPlayerOne;
 		this.ballMovemet = ballMovement;
+		this.scoreSpace = scoreSpace;
 		newBall();
 		score = new Score(GAME_WIDTH,GAME_HEIGHT);
 		this.playerOneMovement = playerOneMovement;
@@ -57,6 +59,9 @@ public class Panel extends JPanel implements Runnable {
 			BallMoved ballMoved = new BallMoved();
 			Thread ballMovedThread = new Thread(ballMoved);
 			ballMovedThread.start();
+			ScoreUpdated scoreUpdated = new ScoreUpdated();
+			Thread scoreThread = new Thread(scoreUpdated);
+			scoreThread.start();
 		}
 	}
 
@@ -146,17 +151,32 @@ Toolkit.getDefaultToolkit().sync(); // Improve animation
 
 		//give a player 1 point and creates new paddles & ball
 		if(ball.x <=0) {
-			score.player2++;
 			newPaddles();
 			newBall();
+			if(isPlayerOne) {
+				score.player2++;
+				try {
+					scoreSpace.put(score.player1,score.player2);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			//System.out.println("Player 2: "+score.player2);
-
 		}
 
 		if(ball.x >= GAME_WIDTH-BALL_DIAMETER) {
-			score.player1++;
 			newPaddles();
 			newBall();
+			if(isPlayerOne) {
+				score.player1++;
+				try {
+					scoreSpace.put(score.player1,score.player2);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			//System.out.println("Player 1: "+score.player1);
 		}
 
@@ -241,11 +261,14 @@ Toolkit.getDefaultToolkit().sync(); // Improve animation
 					if(isPlayerOne) {
 						Object[] t = playerTwoMovement.get(new FormalField(Integer.class), new FormalField(Integer.class), new FormalField(Integer.class));
 						if((int)t[2]==1) {
-							if((int)t[1]==38) {
+							//System.out.println("p1"+t[0]+" "+t[1]+" "+t[2]);
+							if((int)t[1]==87) {
 								paddle1.y = (int)t[0];
+								//System.out.println("hej "+t[0]+" "+t[1]+" "+t[2]);
 								paddle1.setYDirection(-paddle1.speed);
-							}else if((int)t[1]==40) {
+							}else if((int)t[1]==83) {
 								paddle1.y = (int)t[0];
+								//System.out.println("hej "+t[0]+" "+t[1]+" "+t[2]);
 								paddle1.setYDirection(paddle1.speed);
 							}
 						}else if((int)t[2]==0){
@@ -255,11 +278,14 @@ Toolkit.getDefaultToolkit().sync(); // Improve animation
 					}else {
 						Object[] t1 = playerOneMovement.get(new FormalField(Integer.class), new FormalField(Integer.class), new FormalField(Integer.class));
 						if((int)t1[2]==1) {
-							if((int)t1[1]==87) {
+							//System.out.println("p2"+t1[0]+" "+t1[1]+" "+t1[2]);
+							if((int)t1[1]==38) {
 								paddle2.y = (int)t1[0];
+								//System.out.println("hej2 "+t1[0]+" "+t1[1]+" "+t1[2]);
 								paddle2.setYDirection(-paddle2.speed);
-							}else if((int)t1[1]==83) {
+							}else if((int)t1[1]==40) {
 								paddle2.y = (int)t1[0];
+								//System.out.println("hej2 "+t1[0]+" "+t1[1]+" "+t1[2]);
 								paddle2.setYDirection(paddle2.speed);
 							}
 						}else if((int)t1[2]==0){
@@ -298,8 +324,27 @@ Toolkit.getDefaultToolkit().sync(); // Improve animation
 		}
 		
 	}
+	
+	public class ScoreUpdated implements Runnable {
 
-}  
+		@Override
+		public void run() {
+			while(true) {
+				try {
+					Object[] t = scoreSpace.get(new FormalField(Integer.class), new FormalField(Integer.class));
+					score.player1=(int)t[0];
+					score.player2=(int)t[1];
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		}
+		
+	}
+
+}
 
 
 
